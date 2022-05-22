@@ -1,0 +1,191 @@
+[1. Diagonal Difference]
+    public static int diagonalDifference(List<List<int>> arr)
+    {
+        int d1=0;
+        int d2=0;
+        for(int i=0; i<arr.Count; i++){
+            for(int j=0; j<arr.Count; j++){
+                if(i==arr.Count-1-j){
+                    d2+=arr[i][j];                
+                }
+                if(i==j){
+                    d1+=arr[i][j];
+                }
+            }
+        }
+        return Math.Abs(d1-d2);
+    }
+
+
+[2. Jim Jump Walk]
+public static void JimJumpWalk(List<char> road, List<char> move)
+        {
+            int energy = 0;
+            int j = 0;
+            bool life = true;
+            for (int i = 0; i < move.Count; i++)
+            {
+                if (j <= road.Count-1)
+                {
+                    
+                    if (move[i] == 'w')
+                    {
+                        energy++;
+                        j += 1;
+/*                        Console.WriteLine($"{j - 1}//{road[j - 1]}");*/
+                        if (road[j - 1] == 'o')
+                        {
+                            life = false;
+                            break;
+                        }
+                    }
+                    else if (move[i] == 'j')
+                    {
+                        energy -= 2;
+                        j += 2;
+/*                        Console.WriteLine($"{j-1}//{road[j - 1]}");*/
+                        if (energy < 0 || road[j-1]=='o')
+                        {
+                            life=false;
+                            break;
+                        }
+                    }
+                }
+            }
+            if(energy > 0 && life == true)
+            {
+                Console.WriteLine($"Jim's Energy:{energy}");
+            }
+            else
+            {
+                Console.WriteLine("Jim's dead");
+            }
+            
+        }              
+    }
+[3. Buah]
+public static void hitungBuah(string buah)
+        {
+            int apel = 0;
+            int semangka = 0;
+            string[] x = buah.Split(',');
+            for (int i = 0; i < x.Length; i++)
+            {
+                string[] n = x[i].Split(':');
+                if (n[0] == "apel")
+                {
+                    apel+=int.Parse(n[1]);
+                }
+                if(n[0] == "semangka")
+                {
+                    semangka+=int.Parse(n[1]);
+                }
+            }
+            Console.WriteLine($"apel={apel}\tsemangka={semangka}");
+        }
+[4. A6]
+public static void A6()
+        {
+            for(int i = 6; i >= 0; i--)
+            {
+                double x = 0;
+                int p = 6 - i;
+                x = Math.Pow(2,p);
+                Console.WriteLine($"Butuh {x} kertas A6 yang bisa disatukan untuk membuat selembar kertas berukuran A{i}");
+            }
+        }
+[5. Frequency Queries] // beberapa test case salah, beberapa test case benar
+    static List<int> freqQuery(List<List<int>> queries) {
+        List<int> freq = new List<int>();
+        List<int> array = new List<int>();
+        bool two= false;
+        for(int i=0; i<queries.Count; i++){
+            if(queries[i][0]==1){
+                array.Add(queries[i][1]);
+            }
+            else if(queries[i][0]==2){
+                array.Remove(queries[i][1]);
+            }
+            else if(queries[i][0]==3){
+                array.Sort();
+                int count = 1;
+                for(int x=1; x<array.Count; x++)
+                {
+                    if (array[x] == array[x - 1])
+                    {
+                        count++;
+                    }
+                    else
+                    {
+                        if (count == 2)
+                        {
+                            two = true;
+                            break;
+                        }
+                    }
+                }
+                if(two){
+                    freq.Add(1);
+                }
+                else{
+                    freq.Add(0);
+                }
+            }
+        }
+        return freq;
+    }
+[6. Sherlock Anagram]
+    public static int sherlockAndAnagrams(string s)
+    {
+        Dictionary<string, int> n = new Dictionary<string, int>();
+        int count = 0;
+        for (int i = 0; i < s.Length; i++)
+        {
+            for (int j = i; j < s.Length; j++)
+            {
+            string sub = new string(s.Substring(i, j - i + 1).ToCharArray().OrderBy(p => p).ToArray());
+                if (!n.ContainsKey(sub))
+                {
+                    n.Add(sub, 1);
+                }
+                else
+                {
+                    count += n[sub];
+                    n[sub]++;
+                }
+            }
+        }
+        return count;
+    }
+[7. Konsonan Vokal]
+public static void vokalkonsonan(string soal)
+        {
+            string str = soal.ToLower();
+            str.ToLower();
+            string v = "";
+            string c = "";
+            string vocal = "";
+            string konson = "";
+            for (int i = 0; i < str.Length; i++)
+            {
+                int ascii = Convert.ToInt32(str[i]);
+                if (ascii >= 97 && ascii <= 122)
+                {
+                    if (str[i] == 'a' || str[i] == 'i' || str[i] == 'u' || str[i] == 'e' || str[i] == 'o')
+                    {
+                        v += str[i];
+                    }
+                    else
+                    {
+                        c += str[i];
+                    }
+                }
+                char[] arr = v.ToCharArray();
+                Array.Sort(arr);
+                vocal = String.Join("", arr);
+                arr = c.ToCharArray();
+                Array.Sort(arr);
+                konson = String.Join("", arr);
+            }
+            Console.WriteLine($"Huruf vokal\t= {vocal}\nHuruf konsonan\t= {konson}");
+        }
